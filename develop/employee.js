@@ -1,6 +1,9 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
-// const config = require("./config.json")
+var figlet = require('figlet');
+
+
+
 
 const connection = mysql.createConnection({
     host: "localhost",
@@ -13,6 +16,18 @@ connection.connect(function(err){
     if(err) throw err 
     init()
 })
+
+var figlet = require('figlet');
+figlet('EMPLOYEE MANAGER', function(err, data) {
+    if (err) {
+        console.log('Something went wrong...');
+        console.dir(err);
+        return;
+    }
+    console.log("\n============================")
+    console.log(data)
+    console.log("\n============================\n\n\n\n\n\n")
+});
 
 function init(){
   inquirer.prompt (
@@ -118,10 +133,10 @@ function addRole(){
 }
 
 function updateRole() {
-    // query the database for all items being auctioned
+    
     connection.query("SELECT * FROM role", function(err, results) {
       if (err) throw err;
-      // once you have the items, prompt the user for which they'd like to bid on
+      
       inquirer
         .prompt([
           {
@@ -143,16 +158,14 @@ function updateRole() {
           }
         ])
         .then(function(answer) {
-          // get the information of the chosen item
+          
           var chosenItem;
           for (var i = 0; i < results.length; i++) {
             if (results[i].title === answer.choice) {
               chosenItem = results[i];
             }
           }
-          // determine if bid was high enough
-       
-            // bid was high enough, so update db, let the user know, and start over
+         
             connection.query(
               "UPDATE employee SET ? WHERE ?",
               [
@@ -169,9 +182,7 @@ function updateRole() {
                 init();
               }
             );
-     
-         
-            // bid wasn't high enough, so apologize and start over
+    
             
         });
     });
