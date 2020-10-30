@@ -154,7 +154,6 @@ function addRole(){
 }
 
 //add employee function
-//add role function
 function addEmployee(){
     inquirer.prompt([
         {
